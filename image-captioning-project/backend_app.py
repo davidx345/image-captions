@@ -11,7 +11,7 @@ sys.path.append(os.path.join(project_root, 'src'))
 from inference.generate_captions import generate_caption_from_image_path, generate_caption_from_image_bytes
 from config import DATA_DIR # To save uploaded images temporarily
 
-app = Flask(__name__, static_folder=os.path.join(project_root, '..' , 'my-project', 'dist'), static_url_path='')
+app = Flask(__name__)
 
 # Configuration for file uploads
 UPLOAD_FOLDER = os.path.join(DATA_DIR, 'uploads')
@@ -55,15 +55,10 @@ def upload_and_caption_image():
     else:
         return jsonify({"error": "File type not allowed"}), 400
 
-# Serve the frontend's index.html for the root path
+# Health check endpoint
 @app.route('/')
-def serve_frontend():
-    # Assumes your frontend (my-project) is built into a 'dist' folder
-    # and this Flask app is in image-captioning-project (one level above my-project/dist)
-    # Adjust the path if your frontend build output is elsewhere.
-    # The static_folder in Flask(__name__, ...) should point to the frontend's build directory.
-    return send_from_directory(app.static_folder, 'index.html')
+def health_check():
+    return jsonify({"status": "Image Captioning API is running", "endpoints": ["/api/caption"]})
 
 if __name__ == '__main__':
-    print(f"Serving frontend from: {app.static_folder}")
     app.run(debug=True, port=5000) # Runs on http://localhost:5000

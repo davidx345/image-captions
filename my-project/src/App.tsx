@@ -37,11 +37,10 @@ function App() {
 
     setIsLoading(true);
     setError('');
-    setCaption('');
-
-    try {
-      // The Vite proxy in vite.config.ts will forward this to http://localhost:5000/api/caption
-      const response = await axios.post('/api/caption', formData, {
+    setCaption('');    try {
+      // Use environment variable for API URL, fallback to relative path for local development
+      const apiUrl = import.meta.env.VITE_API_URL || '/api/caption';
+      const response = await axios.post(apiUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
