@@ -1,0 +1,58 @@
+# Python specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual environments
+.env
+.venv
+venv/
+venv311/
+venv313/
+ENV/
+env/
+ENV311/
+ENV313/
+
+# dotenv environment variables file
+.env
+
+# IDE specific
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# macOS specific
+.DS_Store
+
+# Frontend (my-project) specific
+my-project/node_modules/
+my-project/dist/
+my-project/.vite/
+
+# Log files
+*.log
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Build artifacts (general)
+build/
+dist/
+*.egg-info/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Temporary files
+*.tmp
+*.swp
+*~

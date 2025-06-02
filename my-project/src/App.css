@@ -1,0 +1,161 @@
+
+/* App.css - Styles for the main App component */
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.upload-section {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.file-label:hover {
+  background-color: #0056b3;
+}
+
+.image-preview-container {
+  margin-bottom: 30px;
+  border: 2px dashed #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.image-preview-container h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #444;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loading-indicator {
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #555;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3; /* Light grey */
+  border-top: 6px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-indicator p {
+  font-size: 1.1rem;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.caption-result {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #e9f7ef;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.caption-result h2 {
+  margin-top: 0;
+  color: #1e8e3e;
+  font-size: 1.6rem;
+}
+
+.caption-result p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+  white-space: pre-wrap; /* To respect newlines in caption if any */
+}
+
+footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #777;
+}

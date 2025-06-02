@@ -1,0 +1,12 @@
+# For creating a simple API endpoint
+Flask
+
+# Gemini API
+google-generativeai
+python-dotenv
+
+# Image Handling (dependency for google-generativeai with vision)
+Pillow
+
+# WSGI HTTP Server for UNIX (for production)
+gunicorn
