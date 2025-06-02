@@ -38,8 +38,8 @@ function App() {
     setIsLoading(true);
     setError('');
     setCaption('');    try {
-      // Use environment variable for API URL, fallback to relative path for local development
-      const apiUrl = import.meta.env.VITE_API_URL || '/api/caption';
+      // Use environment variable for API URL, fallback to your backend URL
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://davidx345-image-caption.onrender.com/api/caption';
       const response = await axios.post(apiUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
