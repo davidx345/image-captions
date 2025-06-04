@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 import os
 import sys
 from werkzeug.utils import secure_filename
@@ -13,6 +14,9 @@ from config import DATA_DIR # To save uploaded images temporarily
 
 app = Flask(__name__)
 
+# Enable CORS for all routes and origins
+CORS(app, origins=["*"])  # In production, specify your frontend domain
+
 # Configuration for file uploads
 UPLOAD_FOLDER = os.path.join(DATA_DIR, 'uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -23,8 +27,12 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/api/caption', methods=['POST'])
+@app.route('/api/caption', methods=['POST', 'OPTIONS'])
 def upload_and_caption_image():
+    # Handle preflight OPTIONS request
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     if 'image' not in request.files:
         return jsonify({"error": "No image file provided"}), 400
     
@@ -35,21 +43,24 @@ def upload_and_caption_image():
     
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)  
         try:
             file.save(image_path)
             print(f"Image saved to {image_path}")
             
             # Generate caption using the path
             caption = generate_caption_from_image_path(image_path)
+            print(f"Generated caption: {caption}")
             
             # Clean up the uploaded image after captioning (optional)
             # os.remove(image_path)
             
             if "Error:" in caption:
-                 return jsonify({"error": caption}), 500
+                print(f"Caption generation error: {caption}")
+                return jsonify({"error": caption}), 500
             return jsonify({"caption": caption})
         except Exception as e:
+            print(f"Exception in image processing: {str(e)}")
             # os.remove(image_path) # Clean up if error occurs
             return jsonify({"error": f"Error processing image: {str(e)}"}), 500
     else:
@@ -62,4 +73,6 @@ def health_check():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Use Render's PORT or default to 5000
-    app.run(debug=False, host='0.0.0.0', port=port)  # Bind to all interfaces
+    debug_mode = os.environ.get('FLASK_ENV') == 'development'
+    print(f"Starting Flask app on port {port}, debug={debug_mode}")
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)  # Bind to all interfaces

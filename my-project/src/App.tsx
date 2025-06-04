@@ -38,20 +38,25 @@ function App() {
     setIsLoading(true);
     setError('');
     setCaption('');    try {
-      // Use environment variable for API URL, fallback to your backend URL
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://davidx345-image-caption.onrender.com/api/caption';
+      // Use environment variable for API URL, fallback to development proxy
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const apiUrl = baseUrl ? `${baseUrl}/api/caption` : '/api/caption';
+      console.log('Making request to:', apiUrl);
+      
       const response = await axios.post(apiUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        timeout: 30000, // 30 second timeout
       });
-      setCaption(response.data.caption);
-    } catch (err: any) {
+      setCaption(response.data.caption);    } catch (err: any) {
       console.error("Error uploading image:", err);
-      if (err.response && err.response.data && err.response.data.error) {
+      if (err.code === 'ECONNABORTED') {
+        setError('Request timeout. Please try again.');
+      } else if (err.response && err.response.data && err.response.data.error) {
         setError(err.response.data.error);
       } else if (err.message) {
-        setError(err.message);
+        setError(`Network error: ${err.message}`);
       } else {
         setError('An unknown error occurred while generating the caption.');
       }

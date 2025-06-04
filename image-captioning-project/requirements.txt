@@ -1,5 +1,6 @@
 # For creating a simple API endpoint
 Flask
+flask-cors
 
 # Gemini API
 google-generativeai
